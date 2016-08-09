@@ -9,7 +9,7 @@ use jarrus90\Core\Web\Controllers\FrontController as Controller;
  * LanguageController
  * Uses for updating current system language for user
  */
-class CurrencyController extends Controller {
+class FrontController extends Controller {
 
     /**
      * Update current currency.

@@ -11,7 +11,7 @@ use jarrus90\Currencies\Models\Currency;
  * Class CurrencyController
  * @package app\commands\cron
  */
-class CurrencyController extends Controller {
+class CronController extends Controller {
     
     public function actionUpdate(){
         $rates = $this->getRates();
