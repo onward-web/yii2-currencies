@@ -1,0 +1,36 @@
+{
+    "name": "jarrus90/yii2-currencies",
+    "description": "Yii2 system currencies management",
+    "keywords": ["yii2", "yii2-currencies", "currencies", "jarrus90"],
+    "type": "yii2-extension",
+    "license": "MIT",
+    "support": {
+        "source": "https://github.com/jarrus90/yii2-currencies"
+    },
+    "authors": [
+        {
+            "name": "Vladimir Stovbchatij",
+            "email": "unreality1990@gmail.com",
+            "homepage": "https://github.com/jarrus90",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "yiisoft/yii2": "~2.0",
+        "yiisoft/yii2-bootstrap": "~2.0",
+        "kartik-v/yii2-grid": "*",
+        "kartik-v/yii2-widget-select2": "*",
+        "jarrus90/yii2-core": "*",
+        "jarrus90/yii2-admin": "*",
+        "jarrus90/yii2-multilang": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "jarrus90\\Currencies\\": ""
+        }
+    },
+    "extra": {
+        "bootstrap": "jarrus90\\Currencies\\Bootstrap"
+    }
+}

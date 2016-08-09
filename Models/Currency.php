@@ -1,0 +1,43 @@
+<?php
+
+namespace jarrus90\Currencies\Models;
+
+use Yii;
+use yii\helpers\Url;
+use yii\db\ActiveRecord;
+
+class Currency extends ActiveRecord {
+
+    /**
+     * Table name
+     * @return string
+     */
+    public static function tableName() {
+        return '{{%system_currency}}';
+    }
+    
+    public static function getCurrency($code){
+        return self::getDb()->cache(function ($db) use ($code) {
+            return self::find()->where(['code' => $code])->asArray()->one();
+        });
+    }
+
+    /**
+     * Function for building array for language select
+     * @return array
+     */
+    public static function getMenuList() {
+        $list = self::getDb()->cache(function ($db) {
+            return self::find()->asArray()->all();
+        }, 1800);
+        $result = [];
+        foreach ($list AS $item) {
+            $result[$item['code']] = [
+                'label' => $item['symbol'],
+                'url' => Url::toRoute(['/catalog/currency/set', 'code' => $item['code']])
+            ];
+        }
+        return $result;
+    }
+    
+}
