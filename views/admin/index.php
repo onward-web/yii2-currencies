@@ -1,38 +1,37 @@
 <?php
 
-use kartik\grid\GridView;
-use yii\helpers\Html;
-use kartik\editable\Editable;
-use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use yii\helpers\Html;
+use kartik\grid\GridView;
+use kartik\editable\Editable;
+use kartik\widgets\ActiveForm;
 ?>
-<div class="box">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title"><?= Yii::t('currencies', 'New currency'); ?></h3>
-        </div>
-        <div class="panel-body">
+<div id="currencyAdd" class="fade modal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
             <?php
             $form = ActiveForm::begin([
                         'action' => Url::toRoute(['create']),
-                        'options' => [
-                            'class' => 'form-horizontal',
-                        ],
-                        'fieldConfig' => [
-                            'template' => "{label}\n<div class=\"col-md-8\">{input}</div>\n<div class=\"col-md-offset-4 col-md-8\">{error}</div>",
-                            'labelOptions' => ['class' => 'col-md-4 control-label'],
-                        ]
+                        'type' => ActiveForm::TYPE_HORIZONTAL
             ]);
             ?>
-            <div class="col-md-6">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">
+                    <?= Yii::t('currencies', 'New currency'); ?>
+                </h4>
+            </div>
+            <div class="modal-body">
                 <?= $form->field($currencyForm, 'name') ?>
                 <?= $form->field($currencyForm, 'symbol') ?>
-            </div>
-            <div class="col-md-6">
                 <?= $form->field($currencyForm, 'code') ?>
                 <?= $form->field($currencyForm, 'rate') ?>
+                <?= $form->field($currencyForm, 'is_active')->checkbox() ?>
+                <?= $form->field($currencyForm, 'is_default')->checkbox() ?>
             </div>
-            <div class="form-group col-md-offset-2 col-md-10">
+            <div class="modal-footer">
                 <?= Html::submitButton(Yii::t('currencies', 'Save'), ['class' => 'btn btn-success ']); ?>
             </div>
             <?php
@@ -41,13 +40,11 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
-
 <div class="box">
     <?php
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $filterModel,
-        'layout' => "{items}\n{pager}",
         'pjax' => true,
         'bordered' => true,
         'striped' => false,
@@ -57,6 +54,26 @@ use yii\helpers\Url;
         'export' => false,
         'floatHeader' => false,
         'showPageSummary' => false,
+        'panel' => [
+            'type' => \kartik\grid\GridView::TYPE_DEFAULT
+        ],
+        'layout' => "{toolbar}{items}{pager}",
+        'toolbar' => [
+            ['content' =>
+                Html::a('<i class="glyphicon glyphicon-plus"></i>', NULL, [
+                    'data-pjax' => 0,
+                    'data-toggle' => 'modal',
+                    'data-target' => '#currencyAdd',
+                    'class' => 'btn btn-default',
+                    'title' => Yii::t('app', 'Create new case')]
+                ) . ' ' .
+                Html::a('<i class="glyphicon glyphicon-repeat"></i>', Url::toRoute(['']), [
+                    'data-pjax' => 0,
+                    'class' => 'btn btn-default',
+                    'title' => Yii::t('app', 'Reset filter')]
+                )
+            ],
+        ],
         'columns' => [
             [
                 'attribute' => 'code',
