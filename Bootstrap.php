@@ -41,6 +41,12 @@ class Bootstrap implements BootstrapInterface {
                     'position' => 90,
                     'url' => '/currencies/admin/index'
                 ];
+            } else {
+                if(empty($app->controllerMap['currencies'])) {
+                    $app->controllerMap['currencies'] = [
+                        'class' => \jarrus90\Currencies\Console\CronController::className()
+                    ];
+                }
             }
             $app->params['yii.migrations'][] = '@jarrus90/Currencies/migrations/';
         }

@@ -14,14 +14,14 @@ use yii\helpers\Url;
         <div class="panel-body">
             <?php
             $form = ActiveForm::begin([
-                'action' => Url::toRoute(['create']),
-                'options' => [
-                    'class' => 'form-horizontal',
-                ],
-                'fieldConfig' => [
-                    'template' => "{label}\n<div class=\"col-md-8\">{input}</div>\n<div class=\"col-md-offset-4 col-md-8\">{error}</div>",
-                    'labelOptions' => ['class' => 'col-md-4 control-label'],
-                ]
+                        'action' => Url::toRoute(['create']),
+                        'options' => [
+                            'class' => 'form-horizontal',
+                        ],
+                        'fieldConfig' => [
+                            'template' => "{label}\n<div class=\"col-md-8\">{input}</div>\n<div class=\"col-md-offset-4 col-md-8\">{error}</div>",
+                            'labelOptions' => ['class' => 'col-md-4 control-label'],
+                        ]
             ]);
             ?>
             <div class="col-md-6">
@@ -33,7 +33,7 @@ use yii\helpers\Url;
                 <?= $form->field($currencyForm, 'rate') ?>
             </div>
             <div class="form-group col-md-offset-2 col-md-10">
-                <?= Html::submitButton(Yii::t('core', 'Save'), ['class' => 'btn btn-success ']); ?>
+                <?= Html::submitButton(Yii::t('currencies', 'Save'), ['class' => 'btn btn-success ']); ?>
             </div>
             <?php
             ActiveForm::end();
@@ -59,8 +59,8 @@ use yii\helpers\Url;
         'showPageSummary' => false,
         'columns' => [
             [
-                'attribute' => 'rate',
-                'width' => '20%',
+                'attribute' => 'code',
+                'width' => '10%',
                 'format' => 'raw',
                 'value' => function($model) use ($currencyForm) {
                     return Editable::widget([
@@ -77,7 +77,7 @@ use yii\helpers\Url;
             ],
             [
                 'attribute' => 'name',
-                'width' => '40%',
+                'width' => '45%',
                 'format' => 'raw',
                 'value' => function($model) use ($currencyForm) {
                     return Editable::widget([
@@ -94,7 +94,7 @@ use yii\helpers\Url;
             ],
             [
                 'attribute' => 'symbol',
-                'width' => '20%',
+                'width' => '10%',
                 'format' => 'raw',
                 'value' => function($model) use ($currencyForm) {
                     return Editable::widget([
@@ -111,7 +111,7 @@ use yii\helpers\Url;
             ],
             [
                 'attribute' => 'rate',
-                'width' => '20%',
+                'width' => '10%',
                 'format' => 'raw',
                 'value' => function($model) use ($currencyForm) {
                     return Editable::widget([
@@ -124,6 +124,49 @@ use yii\helpers\Url;
                                 'size' => 'md',
                                 'options' => ['class' => 'url', 'placeholder' => '']
                     ]);
+                }
+            ],
+            [
+                'attribute' => 'is_active',
+                'width' => '10%',
+                'class' => '\kartik\grid\BooleanColumn',
+                'trueLabel' => Yii::t('yii', 'Yes'),
+                'falseLabel' => Yii::t('yii', 'No'),
+                'content' => function ($model) {
+                    if ($model->is_active) {
+                        return Html::a('<span class="glyphicon glyphicon-eye-close text-danger"></span>', Url::toRoute(['disable', 'code' => $model->code]), [
+                                    'title' => Yii::t('currencies', 'Disable'),
+                                    'data-method' => 'post',
+                                    'data-confirm' => Yii::t('currencies', 'Are you sure you want to disable this currency?'),
+                                    'data-pjax' => '0',
+                        ]);
+                    } else {
+                        return Html::a('<span class="glyphicon glyphicon-eye-open text-success"></span>', Url::toRoute(['enable', 'code' => $model->code]), [
+                                    'title' => Yii::t('currencies', 'Enable'),
+                                    'data-method' => 'post',
+                                    'data-confirm' => Yii::t('currencies', 'Are you sure you want to enable this currency?'),
+                                    'data-pjax' => '0',
+                        ]);
+                    }
+                }
+            ],
+            [
+                'attribute' => 'is_default',
+                'width' => '10%',
+                'class' => '\kartik\grid\BooleanColumn',
+                'trueLabel' => Yii::t('yii', 'Yes'),
+                'falseLabel' => Yii::t('yii', 'No'),
+                'content' => function ($model) {
+                    if (!$model->is_default) {
+                        return Html::a('<span class="glyphicon glyphicon-star-empty"></span>', Url::toRoute(['default', 'code' => $model->code]), [
+                                    'title' => Yii::t('currencies', 'Set default'),
+                                    'data-method' => 'post',
+                                    'data-confirm' => Yii::t('currencies', 'Are you sure you want to set this currency as default?'),
+                                    'data-pjax' => '0',
+                        ]);
+                    } else {
+                        return '<span class="glyphicon glyphicon-star text-success"></span>';
+                    }
                 }
             ],
             [

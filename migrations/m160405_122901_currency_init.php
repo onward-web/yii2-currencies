@@ -13,6 +13,8 @@ class m160405_122901_currency_init extends \yii\db\Migration {
             'symbol' => $this->string(10)->notNull(),
             'name' => $this->string(255)->notNull(),
             'rate' => $this->float(5),
+            'is_active' => $this->integer(1)->defaultValue(0),
+            'is_default' => $this->integer(1)->defaultValue(0)
                 ], $tableOptions);
         $this->addPrimaryKey('pk-system_currency', '{{%system_currency}}', ['code']);
         $this->insert('{{%system_currency}}', [
@@ -20,6 +22,8 @@ class m160405_122901_currency_init extends \yii\db\Migration {
             'symbol' => '$',
             'name' => 'United States Dollar',
             'rate' => '1',
+            'is_active' => true,
+            'is_default' => true
         ]);
     }
 

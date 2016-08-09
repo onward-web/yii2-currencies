@@ -52,8 +52,8 @@ class AdminController extends BaseController {
      */
     public function actionCreate() {
         $currencyForm = Yii::createObject([
-            'class' => Currency::className(),
-            'scenario' => 'create'
+                    'class' => Currency::className(),
+                    'scenario' => 'create'
         ]);
 
         if ($currencyForm->load(Yii::$app->request->post()) && $currencyForm->save()) {
@@ -70,12 +70,12 @@ class AdminController extends BaseController {
      * @return string
      */
     public function actionUpdate($code, $field) {
-        $currencyForm = $this->findCurrency($code);
-        $currencyForm->scenario = 'update';
-        
+        $currency = $this->findCurrency($code);
+        $currency->scenario = 'update';
+
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        if ($currencyForm->load(Yii::$app->request->post()) && $result = $currencyForm->save()) {
-            return ['output' => ISSET($result->$field) ? $result->$field : $result->name];
+        if ($currency->load(Yii::$app->request->post()) && $currency->save()) {
+            return ['output' => ISSET($currency->$field) ? $currency->$field : $currency->name];
         } else {
             return ['output' => '', 'message' => Yii::t('currencies', 'Currency update failed.')];
         }

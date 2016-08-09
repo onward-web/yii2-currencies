@@ -8,16 +8,40 @@ use yii\db\ActiveRecord;
 
 class Currency extends ActiveRecord {
 
+
+    /**
+     * Validation rules
+     * @return array
+     */
+    public function rules() {
+        return [
+            'required' => [['code', 'rate'], 'required', 'on' => ['create', 'update']],
+            'safe' => [['symbol', 'name'], 'safe'],
+            'boolean' => [['is_default', 'is_active'], 'boolean'],
+            'safeSearch' => [['code', 'rate', 'is_default', 'is_active'], 'safe', 'on' => ['search']],
+        ];
+    }
+
+    public function scenarios() {
+        return [
+            'create' => ['code', 'symbol', 'name', 'rate', 'is_default', 'is_active'],
+            'update' => ['code', 'symbol', 'name', 'rate', 'is_default', 'is_active'],
+            'search' => ['code', 'symbol', 'name', 'rate', 'is_default', 'is_active'],
+        ];
+    }
+    
     /**
      * Attribute labels
      * @return array
      */
     public function attributeLabels() {
         return [
-            'code' => Yii::t('currencies', 'Currency code'),
-            'name' => Yii::t('currencies', 'Currency name'),
-            'symbol' => Yii::t('currencies', 'Currency symbol'),
-            'rate' => Yii::t('currencies', 'Currency rate'),
+            'code' => Yii::t('currencies', 'Code'),
+            'name' => Yii::t('currencies', 'Name'),
+            'symbol' => Yii::t('currencies', 'Symbol'),
+            'rate' => Yii::t('currencies', 'Rate'),
+            'is_default' => Yii::t('currencies', 'Default'),
+            'is_active' => Yii::t('currencies', 'Active'),
         ];
     }
 
@@ -27,30 +51,6 @@ class Currency extends ActiveRecord {
      */
     public static function tableName() {
         return '{{%system_currency}}';
-    }
-
-    public static function getCurrency($code) {
-        return self::getDb()->cache(function ($db) use ($code) {
-                    return self::find()->where(['code' => $code])->asArray()->one();
-                });
-    }
-
-    /**
-     * Function for building array for language select
-     * @return array
-     */
-    public static function getMenuList() {
-        $list = self::getDb()->cache(function ($db) {
-            return self::find()->asArray()->all();
-        }, 1800);
-        $result = [];
-        foreach ($list AS $item) {
-            $result[$item['code']] = [
-                'label' => $item['symbol'],
-                'url' => Url::toRoute(['/catalog/currency/set', 'code' => $item['code']])
-            ];
-        }
-        return $result;
     }
 
     /**
@@ -70,6 +70,12 @@ class Currency extends ActiveRecord {
 
         }
         return $dataProvider;
+    }
+
+    public static function getCurrency($code) {
+        return self::getDb()->cache(function ($db) use ($code) {
+                    return self::find()->where(['code' => $code])->asArray()->one();
+                });
     }
 
 }
