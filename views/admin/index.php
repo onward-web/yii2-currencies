@@ -5,21 +5,16 @@ use yii\helpers\Html;
 use kartik\editable\Editable;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-
-$this->title = $title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('core', 'Admin panel'), 'url' => ['/admin']];
-$this->params['breadcrumbs'][] = Yii::t('catalog', 'Catalog');
-$this->params['breadcrumbs'][] = $title;
 ?>
 <div class="box">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title"><?= Yii::t('chat', 'New word'); ?></h3>
+            <h3 class="panel-title"><?= Yii::t('currencies', 'New currency'); ?></h3>
         </div>
         <div class="panel-body">
             <?php
             $form = ActiveForm::begin([
-                'action' => Url::toRoute(['/catalog/admincurrencies/create']),
+                'action' => Url::toRoute(['create']),
                 'options' => [
                     'class' => 'form-horizontal',
                 ],
@@ -50,8 +45,8 @@ $this->params['breadcrumbs'][] = $title;
 <div class="box">
     <?php
     echo GridView::widget([
-        'dataProvider' => $provider,
-        'filterModel' => $searchModel,
+        'dataProvider' => $dataProvider,
+        'filterModel' => $filterModel,
         'layout' => "{items}\n{pager}",
         'pjax' => true,
         'bordered' => true,
@@ -70,11 +65,11 @@ $this->params['breadcrumbs'][] = $title;
                 'value' => function($model) use ($currencyForm) {
                     return Editable::widget([
                                 'name' => $currencyForm->formName() . '[code]',
-                                'ajaxSettings' => ['url' => Url::toRoute(['/catalog/admincurrencies/update', 'code' => $model->code, 'field' => 'code'])],
+                                'ajaxSettings' => ['url' => Url::toRoute(['update', 'code' => $model->code, 'field' => 'code'])],
                                 'asPopover' => true,
                                 'placement' => 'top',
                                 'value' => $model->code,
-                                'header' => Yii::t('catalog', 'Currency code'),
+                                'header' => Yii::t('currencies', 'Currency code'),
                                 'size' => 'md',
                                 'options' => ['class' => 'url', 'placeholder' => '']
                     ]);
@@ -87,11 +82,11 @@ $this->params['breadcrumbs'][] = $title;
                 'value' => function($model) use ($currencyForm) {
                     return Editable::widget([
                                 'name' => $currencyForm->formName() . '[name]',
-                                'ajaxSettings' => ['url' => Url::toRoute(['/catalog/admincurrencies/update', 'code' => $model->code, 'field' => 'name'])],
+                                'ajaxSettings' => ['url' => Url::toRoute(['update', 'code' => $model->code, 'field' => 'name'])],
                                 'asPopover' => true,
                                 'placement' => 'top',
                                 'value' => $model->name,
-                                'header' => Yii::t('catalog', 'Currency name'),
+                                'header' => Yii::t('currencies', 'Currency name'),
                                 'size' => 'md',
                                 'options' => ['class' => 'url', 'placeholder' => '']
                     ]);
@@ -104,11 +99,11 @@ $this->params['breadcrumbs'][] = $title;
                 'value' => function($model) use ($currencyForm) {
                     return Editable::widget([
                                 'name' => $currencyForm->formName() . '[symbol]',
-                                'ajaxSettings' => ['url' => Url::toRoute(['/catalog/admincurrencies/update', 'code' => $model->code, 'field' => 'symbol'])],
+                                'ajaxSettings' => ['url' => Url::toRoute(['update', 'code' => $model->code, 'field' => 'symbol'])],
                                 'asPopover' => true,
                                 'placement' => 'top',
                                 'value' => $model->symbol,
-                                'header' => Yii::t('catalog', 'Currency symbol'),
+                                'header' => Yii::t('currencies', 'Currency symbol'),
                                 'size' => 'md',
                                 'options' => ['class' => 'url', 'placeholder' => '']
                     ]);
@@ -121,11 +116,11 @@ $this->params['breadcrumbs'][] = $title;
                 'value' => function($model) use ($currencyForm) {
                     return Editable::widget([
                                 'name' => $currencyForm->formName() . '[rate]',
-                                'ajaxSettings' => ['url' => Url::toRoute(['/catalog/admincurrencies/update', 'code' => $model->code, 'field' => 'rate'])],
+                                'ajaxSettings' => ['url' => Url::toRoute(['update', 'code' => $model->code, 'field' => 'rate'])],
                                 'asPopover' => true,
                                 'placement' => 'top',
                                 'value' => $model->rate,
-                                'header' => Yii::t('catalog', 'Currency rate'),
+                                'header' => Yii::t('currencies', 'Currency rate'),
                                 'size' => 'md',
                                 'options' => ['class' => 'url', 'placeholder' => '']
                     ]);
@@ -136,7 +131,7 @@ $this->params['breadcrumbs'][] = $title;
                 'template' => '{delete}',
                 'buttons' => [
                     'delete' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['/catalog/admincurrencies/delete', 'code' => $model->code]), [
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['delete', 'code' => $model->code]), [
                                     'title' => Yii::t('yii', 'Delete'),
                                     'data-method' => 'post',
                                     'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),

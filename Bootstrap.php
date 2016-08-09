@@ -2,10 +2,14 @@
 
 namespace jarrus90\Currencies;
 
+use Yii;
+use yii\i18n\PhpMessageSource;
+use yii\base\BootstrapInterface;
+use yii\console\Application as ConsoleApplication;
 /**
  * Bootstrap class registers module and application component
  */
-class Bootstrap implements \yii\base\BootstrapInterface {
+class Bootstrap implements BootstrapInterface {
 
     /**
      * Bootstrap method to be called during application bootstrap stage.
@@ -15,8 +19,30 @@ class Bootstrap implements \yii\base\BootstrapInterface {
         /**
          * @var $module Module 
          */
-        if (!$app->hasModule('currencies') || !($module = $app->getModule('currencies')) instanceof Module) {
-            
+        if ($app->hasModule('currencies') && ($module = $app->getModule('currencies')) instanceof Module) {
+            if (!isset($app->get('i18n')->translations['currencies*'])) {
+                $app->get('i18n')->translations['currencies*'] = [
+                    'class' => PhpMessageSource::className(),
+                    'basePath' => __DIR__ . '/messages',
+                    'sourceLanguage' => 'en-US'
+                ];
+            }
+            if (!$app instanceof ConsoleApplication) {
+                $module->controllerNamespace = 'jarrus90\Currencies\Controllers';
+                $rule = Yii::createObject([
+                    'class' => 'yii\web\GroupUrlRule',
+                    'prefix' => $module->urlPrefix,
+                    'routePrefix' => 'currencies',
+                    'rules' => $module->urlRules,
+                ]);
+                $app->urlManager->addRules([$rule], false);
+                $app->params['admin']['menu']['currencies'] = [
+                    'label' => Yii::t('currencies', 'Currencies'),
+                    'position' => 90,
+                    'url' => '/currencies/admin/index'
+                ];
+            }
+            $app->params['yii.migrations'][] = '@jarrus90/Currencies/migrations/';
         }
     }
 
