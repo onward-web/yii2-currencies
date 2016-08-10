@@ -170,6 +170,7 @@ use kartik\widgets\ActiveForm;
             [
                 'attribute' => 'is_default',
                 'width' => '10%',
+                'format' => 'raw',
                 'class' => '\kartik\grid\BooleanColumn',
                 'trueLabel' => Yii::t('yii', 'Yes'),
                 'falseLabel' => Yii::t('yii', 'No'),

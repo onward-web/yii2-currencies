@@ -38,7 +38,8 @@ class Bootstrap implements BootstrapInterface {
                 $app->urlManager->addRules([$rule], false);
                 $app->params['admin']['menu']['currencies'] = [
                     'label' => Yii::t('currencies', 'Currencies'),
-                    'position' => 90,
+                    'position' => 91,
+                    'icon' => '<i class="fa fa-fw fa-usd"></i>',
                     'url' => '/currencies/admin/index'
                 ];
             } else {

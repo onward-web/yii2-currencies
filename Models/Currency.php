@@ -72,6 +72,27 @@ class Currency extends ActiveRecord {
         return $dataProvider;
     }
 
+    public function afterSave($insert, $changedAttributes) {
+        if($this->is_default) {
+            self::updateAll(['is_default' => false], ['NOT', ['code' => $this->code]]);
+        }
+        return parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function afterDelete() {
+        $currentDefault = self::findOne(['is_default' => true]);
+        if(!$currentDefault) {
+            $newDefault = self::findOne(['code' => 'USD']);
+            $newDefault->scenario = 'update';
+            $newDefault->setAttributes([
+                'is_default' => 1,
+                'rate' => 1
+            ]);
+            $newDefault->save();
+        }
+        return parent::afterDelete();
+    }
+
     public static function getCurrency($code) {
         return self::getDb()->cache(function ($db) use ($code) {
                     return self::find()->where(['code' => $code])->asArray()->one();

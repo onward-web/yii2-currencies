@@ -38,11 +38,11 @@ class AdminController extends BaseController {
                     'class' => Currency::className(),
                     'scenario' => 'search'
         ]);
+        Yii::$app->view->title = Yii::t('currencies', 'Currencies');
         return $this->render('index', [
                     'filterModel' => $filterModel,
                     'dataProvider' => $filterModel->search(Yii::$app->request->get()),
-                    'currencyForm' => $currencyForm,
-                    'title' => Yii::t('currencies', 'Currencies')
+                    'currencyForm' => $currencyForm
         ]);
     }
 
@@ -96,6 +96,25 @@ class AdminController extends BaseController {
         return $this->redirect(Url::toRoute(['index']));
     }
 
+    /**
+     * Delete blacklist word
+     * @param integer $code currency code
+     * @return \yii\web\Response
+     */
+    public function actionDefault($code) {
+        $currencyObj = $this->findCurrency($code);
+        $currencyObj->scenario = 'update';
+        $currencyObj->setAttributes([
+            'is_default' => 1,
+            'rate' => 1
+        ]);
+        if ($currencyObj->save()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('currencies', 'Currency set as default.'));
+        } else {
+            Yii::$app->getSession()->setFlash('danger', Yii::t('currencies', 'Currency set as defaul failed.'));
+        }
+        return $this->redirect(Url::toRoute(['index']));
+    }
     /**
      * Finds the Currency model based on its code value.
      * If the model is not found, a 404 HTTP exception will be thrown.
