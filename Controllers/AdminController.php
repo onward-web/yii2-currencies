@@ -64,11 +64,6 @@ class AdminController extends BaseController {
         return $this->redirect(Url::toRoute(['index']));
     }
 
-    /**
-     * Update blacklist word
-     * @param string $id word number
-     * @return string
-     */
     public function actionUpdate($code, $field) {
         $currency = $this->findCurrency($code);
         $currency->scenario = 'update';
@@ -81,17 +76,40 @@ class AdminController extends BaseController {
         }
     }
 
-    /**
-     * Delete blacklist word
-     * @param integer $code currency code
-     * @return \yii\web\Response
-     */
     public function actionDelete($code) {
         $currencyObj = $this->findCurrency($code);
         if ($currencyObj->delete()) {
             Yii::$app->getSession()->setFlash('success', Yii::t('currencies', 'Currency was deleted.'));
         } else {
             Yii::$app->getSession()->setFlash('danger', Yii::t('currencies', 'Currency delete failed.'));
+        }
+        return $this->redirect(Url::toRoute(['index']));
+    }
+
+    public function actionEnable($code) {
+        $currencyObj = $this->findCurrency($code);
+        $currencyObj->scenario = 'update';
+        $currencyObj->setAttributes([
+            'is_active' => 1
+        ]);
+        if ($currencyObj->save()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('currencies', 'Currency enabled.'));
+        } else {
+            Yii::$app->getSession()->setFlash('danger', Yii::t('currencies', 'Currency enabling failed.'));
+        }
+        return $this->redirect(Url::toRoute(['index']));
+    }
+
+    public function actionDisable($code) {
+        $currencyObj = $this->findCurrency($code);
+        $currencyObj->scenario = 'update';
+        $currencyObj->setAttributes([
+            'is_active' => 0
+        ]);
+        if ($currencyObj->save()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('currencies', 'Currency disabled.'));
+        } else {
+            Yii::$app->getSession()->setFlash('danger', Yii::t('currencies', 'Currency disabling failed.'));
         }
         return $this->redirect(Url::toRoute(['index']));
     }
@@ -111,10 +129,11 @@ class AdminController extends BaseController {
         if ($currencyObj->save()) {
             Yii::$app->getSession()->setFlash('success', Yii::t('currencies', 'Currency set as default.'));
         } else {
-            Yii::$app->getSession()->setFlash('danger', Yii::t('currencies', 'Currency set as defaul failed.'));
+            Yii::$app->getSession()->setFlash('danger', Yii::t('currencies', 'Currency set as default failed.'));
         }
         return $this->redirect(Url::toRoute(['index']));
     }
+
     /**
      * Finds the Currency model based on its code value.
      * If the model is not found, a 404 HTTP exception will be thrown.

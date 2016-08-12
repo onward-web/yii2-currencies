@@ -65,12 +65,12 @@ use kartik\widgets\ActiveForm;
                     'data-toggle' => 'modal',
                     'data-target' => '#currencyAdd',
                     'class' => 'btn btn-default',
-                    'title' => Yii::t('app', 'Create new case')]
+                    'title' => Yii::t('currencies', 'Create new currency')]
                 ) . ' ' .
                 Html::a('<i class="glyphicon glyphicon-repeat"></i>', Url::toRoute(['']), [
                     'data-pjax' => 0,
                     'class' => 'btn btn-default',
-                    'title' => Yii::t('app', 'Reset filter')]
+                    'title' => Yii::t('currencies', 'Reset filter')]
                 )
             ],
         ],

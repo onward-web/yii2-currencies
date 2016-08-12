@@ -4,6 +4,7 @@ namespace jarrus90\Currencies\Models;
 
 use Yii;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 
 class Currency extends ActiveRecord {
@@ -51,6 +52,12 @@ class Currency extends ActiveRecord {
      */
     public static function tableName() {
         return '{{%system_currency}}';
+    }
+
+    public static function listMap() {
+        return ArrayHelper::map(static::find()->asArray()->all(), 'code', function($model) {
+            return $model['name'] . ($model['is_active'] ? '' : ' (' . Yii::t('currencies', 'disabled') . ')');
+        });
     }
 
     /**

@@ -17,6 +17,15 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Create new currency' => 'Добавить новую валюту',
+    'Currency disabled.' => 'Валюта отключена',
+    'Currency disabling failed.' => 'Ошибка при отключении валюты',
+    'Currency enabled.' => 'Валюта включена',
+    'Currency enabling failed.' => 'Ошибка при включении валюты',
+    'Currency set as default failed.' => 'Ошибка при установке валюты по умолчанию',
+    'Currency set as default.' => 'Валюта установвлена по умолчанию',
+    'Reset filter' => 'Сбросить фильтр',
+    'disabled' => 'отключена',
     'Active' => 'Активная',
     'Are you sure you want to disable this currency?' => 'Вы уверены что хотите отключить эту валюту?',
     'Are you sure you want to enable this currency?' => 'Вы уверены что хотите включить эту валюту?',
@@ -38,7 +47,7 @@ return [
     'Name' => 'Название',
     'New currency' => 'Новая валюта',
     'Rate' => 'Курс',
+    'Save' => 'Сохранить',
     'Set default' => 'Сделать по умолчанию',
     'Symbol' => 'Символ',
-    'Save' => 'Сохранить',
 ];
