@@ -106,4 +106,8 @@ class Currency extends ActiveRecord {
                 });
     }
 
+    public static function convert($amount, $currency) {
+        $curr = self::getCurrency($currency);
+        return $amount / $curr['rate'];
+    }
 }
