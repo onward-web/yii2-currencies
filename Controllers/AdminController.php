@@ -3,12 +3,35 @@
 namespace jarrus90\Currencies\Controllers;
 
 use Yii;
-use yii\filters\AccessControl;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
+use kartik\grid\EditableColumnAction;
 use jarrus90\Admin\Web\Controllers\AdminController AS BaseController;
 use jarrus90\Currencies\Models\Currency;
-
 class AdminController extends BaseController {
+
+    public function actions() {
+        return ArrayHelper::merge(parent::actions(), [
+            'update' => [
+                'class' => EditableColumnAction::className(),
+                'modelClass' => Currency::className(),
+                'findModel' => function($id, $action) {
+                    $currency = Currency::findOne($id);
+                    $currency->scenario = 'update';
+                    return $currency;
+                },
+                'outputValue' => function ($model, $attribute, $key, $index) {
+                    return $model->$attribute;
+                },
+                'outputMessage' => function($model, $attribute, $key, $index) {
+                    return '';
+                },
+                'showModelErrors' => true,
+                'errorOptions' => ['header' => '']
+            ]
+        ]);
+    }
 
     /** @inheritdoc */
     public function behaviors() {
@@ -64,17 +87,19 @@ class AdminController extends BaseController {
         return $this->redirect(Url::toRoute(['index']));
     }
 
-    public function actionUpdate($code, $field) {
-        $currency = $this->findCurrency($code);
-        $currency->scenario = 'update';
+    /*
+      public function actionUpdate($code, $field) {
+      $currency = $this->findCurrency($code);
+      $currency->scenario = 'update';
 
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        if ($currency->load(Yii::$app->request->post()) && $currency->save()) {
-            return ['output' => ISSET($currency->$field) ? $currency->$field : $currency->name];
-        } else {
-            return ['output' => '', 'message' => Yii::t('currencies', 'Currency update failed.')];
-        }
-    }
+      Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+      if ($currency->load(Yii::$app->request->post()) && $currency->save()) {
+      return ['output' => ISSET($currency->$field) ? $currency->$field : $currency->name];
+      } else {
+      return ['output' => '', 'message' => Yii::t('currencies', 'Currency update failed.')];
+      }
+      }
+     */
 
     public function actionDelete($code) {
         $currencyObj = $this->findCurrency($code);

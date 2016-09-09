@@ -78,70 +78,50 @@ use kartik\widgets\ActiveForm;
             [
                 'attribute' => 'code',
                 'width' => '10%',
-                'format' => 'raw',
-                'value' => function($model) use ($currencyForm) {
-                    return Editable::widget([
-                                'name' => $currencyForm->formName() . '[code]',
-                                'ajaxSettings' => ['url' => Url::toRoute(['update', 'code' => $model->code, 'field' => 'code'])],
-                                'asPopover' => true,
-                                'placement' => 'top',
-                                'value' => $model->code,
-                                'header' => Yii::t('currencies', 'Currency code'),
-                                'size' => 'md',
-                                'options' => ['class' => 'url', 'placeholder' => '']
-                    ]);
-                }
+                'class' => 'kartik\grid\EditableColumn',
+                'editableOptions' => [
+                    'formOptions' => [
+                        'action' => [
+                            Url::toRoute(['update'])
+                        ]
+                    ]
+                ],
             ],
             [
                 'attribute' => 'name',
                 'width' => '45%',
-                'format' => 'raw',
-                'value' => function($model) use ($currencyForm) {
-                    return Editable::widget([
-                                'name' => $currencyForm->formName() . '[name]',
-                                'ajaxSettings' => ['url' => Url::toRoute(['update', 'code' => $model->code, 'field' => 'name'])],
-                                'asPopover' => true,
-                                'placement' => 'top',
-                                'value' => $model->name,
-                                'header' => Yii::t('currencies', 'Currency name'),
-                                'size' => 'md',
-                                'options' => ['class' => 'url', 'placeholder' => '']
-                    ]);
-                }
+                'class' => 'kartik\grid\EditableColumn',
+                'editableOptions' => [
+                    'formOptions' => [
+                        'action' => [
+                            Url::toRoute(['update'])
+                        ]
+                    ]
+                ],
             ],
             [
                 'attribute' => 'symbol',
                 'width' => '10%',
-                'format' => 'raw',
-                'value' => function($model) use ($currencyForm) {
-                    return Editable::widget([
-                                'name' => $currencyForm->formName() . '[symbol]',
-                                'ajaxSettings' => ['url' => Url::toRoute(['update', 'code' => $model->code, 'field' => 'symbol'])],
-                                'asPopover' => true,
-                                'placement' => 'top',
-                                'value' => $model->symbol,
-                                'header' => Yii::t('currencies', 'Currency symbol'),
-                                'size' => 'md',
-                                'options' => ['class' => 'url', 'placeholder' => '']
-                    ]);
-                }
+                'class' => 'kartik\grid\EditableColumn',
+                'editableOptions' => [
+                    'formOptions' => [
+                        'action' => [
+                            Url::toRoute(['update'])
+                        ]
+                    ]
+                ],
             ],
             [
                 'attribute' => 'rate',
                 'width' => '10%',
-                'format' => 'raw',
-                'value' => function($model) use ($currencyForm) {
-                    return Editable::widget([
-                                'name' => $currencyForm->formName() . '[rate]',
-                                'ajaxSettings' => ['url' => Url::toRoute(['update', 'code' => $model->code, 'field' => 'rate'])],
-                                'asPopover' => true,
-                                'placement' => 'top',
-                                'value' => $model->rate,
-                                'header' => Yii::t('currencies', 'Currency rate'),
-                                'size' => 'md',
-                                'options' => ['class' => 'url', 'placeholder' => '']
-                    ]);
-                }
+                'class' => 'kartik\grid\EditableColumn',
+                'editableOptions' => [
+                    'formOptions' => [
+                        'action' => [
+                            Url::toRoute(['update'])
+                        ]
+                    ]
+                ],
             ],
             [
                 'attribute' => 'is_active',
@@ -151,14 +131,14 @@ use kartik\widgets\ActiveForm;
                 'falseLabel' => Yii::t('yii', 'No'),
                 'content' => function ($model) {
                     if ($model->is_active) {
-                        return Html::a('<span class="glyphicon glyphicon-eye-close text-danger"></span>', Url::toRoute(['disable', 'code' => $model->code]), [
+                        return Html::a('<span class="glyphicon glyphicon-eye-open text-success"></span>', Url::toRoute(['disable', 'code' => $model->code]), [
                                     'title' => Yii::t('currencies', 'Disable'),
                                     'data-method' => 'post',
                                     'data-confirm' => Yii::t('currencies', 'Are you sure you want to disable this currency?'),
                                     'data-pjax' => '0',
                         ]);
                     } else {
-                        return Html::a('<span class="glyphicon glyphicon-eye-open text-success"></span>', Url::toRoute(['enable', 'code' => $model->code]), [
+                        return Html::a('<span class="glyphicon glyphicon-eye-close text-danger"></span>', Url::toRoute(['enable', 'code' => $model->code]), [
                                     'title' => Yii::t('currencies', 'Enable'),
                                     'data-method' => 'post',
                                     'data-confirm' => Yii::t('currencies', 'Are you sure you want to enable this currency?'),
