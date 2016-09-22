@@ -1,5 +1,7 @@
 # Yii2-currencies
 
+[![Build Status](https://travis-ci.org/jarrus90/yii2-currencies.svg?branch=master)](https://travis-ci.org/jarrus90/yii2-currencies)
+
 The latest version includes following features:
 
 * Currencies management
