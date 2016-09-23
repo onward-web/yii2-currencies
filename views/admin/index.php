@@ -3,8 +3,7 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use kartik\grid\GridView;
-use kartik\editable\Editable;
-use kartik\widgets\ActiveForm;
+use kartik\form\ActiveForm;
 ?>
 <div id="currencyAdd" class="fade modal" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-md">
