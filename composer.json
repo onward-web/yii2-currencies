@@ -23,8 +23,7 @@
         "kartik-v/yii2-widget-activeform": "*",
         "kartik-v/yii2-widget-select2": "*",
         "kartik-v/yii2-editable": "*",
-        "jarrus90/yii2-core": "*",
-        "jarrus90/yii2-multilang": "*"
+        "jarrus90/yii2-core": "*"
     },
     "autoload": {
         "psr-4": {

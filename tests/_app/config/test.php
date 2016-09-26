@@ -1,20 +1,9 @@
 <?php
 
-return [
-    'id' => 'yii2-user-tests',
-    'basePath' => dirname(__DIR__),
-    'language' => 'en-US',
+return \yii\helpers\ArrayHelper::merge(require_once __DIR__ . '/common.php', [
+    'id' => 'yii2-currencies-tests',
     'aliases' => [
-        '@jarrus90/Currencies' => dirname(dirname(dirname(__DIR__))),
-        '@tests' => dirname(dirname(__DIR__)),
-        '@vendor' => VENDOR_DIR,
         '@bower' => VENDOR_DIR . '/bower-asset',
-    ],
-    'bootstrap' => ['jarrus90\Currencies\Bootstrap'],
-    'modules' => [
-        'currencies' => [
-            'class' => 'jarrus90\Currencies\Module'
-        ],
     ],
     'components' => [
         'db' => require __DIR__ . '/db.php',
@@ -30,4 +19,4 @@ return [
         ],
     ],
     'params' => [],
-];
+]);
