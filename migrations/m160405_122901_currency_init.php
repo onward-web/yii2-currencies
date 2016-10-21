@@ -1,5 +1,8 @@
 <?php
 
+namespace jarrus90\Currencies\migrations;
+
+use Yii;
 class m160405_122901_currency_init extends \yii\db\Migration {
 
     public function up() {
