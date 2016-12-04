@@ -1,9 +1,8 @@
 <?php
 
-namespace jarrus90\Currencies\migrations;
+use yii\db\Migration;
 
-use Yii;
-class m160405_122901_currency_init extends \yii\db\Migration {
+class m160405_122901_currency extends Migration {
 
     public function up() {
         $tableOptions = null;
