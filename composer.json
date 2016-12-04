@@ -22,7 +22,7 @@
         "kartik-v/yii2-grid": ">=3.1.2",
         "kartik-v/yii2-widget-activeform": "*",
         "kartik-v/yii2-widget-select2": "*",
-        "kartik-v/yii2-editable": "*",       
+        "kartik-v/yii2-editable": "*"       
     },
     "autoload": {
         "psr-4": {
