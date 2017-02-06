@@ -8,9 +8,9 @@ use yii\helpers\ArrayHelper;
 use yii\filters\AccessControl;
 use kartik\grid\EditableColumnAction;
 use jarrus90\Currencies\Models\Currency;
-use jarrus90\Core\Web\Controllers\AdminController AS BaseController;
+//use jarrus90\Core\Web\Controllers\AdminController AS BaseController;
 
-class AdminController extends BaseController {
+class AdminController extends \yii\web\Controller{
 
     public function actions() {
         return ArrayHelper::merge(parent::actions(), [
@@ -34,7 +34,7 @@ class AdminController extends BaseController {
         ]);
     }
 
-    /** @inheritdoc */
+    /** @inheritdoc *//*
     public function behaviors() {
         return [
             'access' => [
@@ -47,7 +47,7 @@ class AdminController extends BaseController {
                 ],
             ],
         ];
-    }
+    }*/
 
     /**
      * Show list of blacklisted words

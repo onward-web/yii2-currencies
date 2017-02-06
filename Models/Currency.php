@@ -16,7 +16,7 @@ class Currency extends ActiveRecord {
      */
     public function rules() {
         return [
-            'required' => [['code', 'rate'], 'required', 'on' => ['create', 'update']],
+            'required' => [['code', 'rate', 'decimal_place'], 'required', 'on' => ['create', 'update']],
             'safe' => [['symbol', 'name'], 'safe'],
             'boolean' => [['is_default', 'is_active'], 'boolean'],
             'safeSearch' => [['code', 'rate', 'is_default', 'is_active'], 'safe', 'on' => ['search']],
@@ -41,6 +41,7 @@ class Currency extends ActiveRecord {
             'name' => Yii::t('currencies', 'Name'),
             'symbol' => Yii::t('currencies', 'Symbol'),
             'rate' => Yii::t('currencies', 'Rate'),
+            'decimal_place' => Yii::t('currencies', 'Decimal place'),
             'is_default' => Yii::t('currencies', 'Default'),
             'is_active' => Yii::t('currencies', 'Active'),
         ];
@@ -51,7 +52,7 @@ class Currency extends ActiveRecord {
      * @return string
      */
     public static function tableName() {
-        return '{{%system_currency}}';
+        return '{{%currency}}';
     }
 
     public static function listMap() {
